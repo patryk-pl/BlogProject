@@ -12,5 +12,10 @@ namespace BlogProject
         {
             return View();
         }
+
+        public IActionResult Post()
+        {
+            return View();
+        }
     }
 }
