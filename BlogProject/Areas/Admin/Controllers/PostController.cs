@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BlogProject.Areas.Admin.Controllers
+namespace BlogProject
 {
     public class PostController : Controller
     {
@@ -14,9 +14,17 @@ namespace BlogProject.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Add()
+        public IActionResult Create()
         {
             return View();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(PostViewModel postVm)
+        {
+            return RedirectToAction(nameof(Index), "Home", new{Area="Customer"});
+        }
+
     }
 }
