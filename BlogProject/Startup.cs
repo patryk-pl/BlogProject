@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlogProject.Core;
 using BlogProject.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +32,16 @@ namespace BlogProject
             options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")
                 ));
+
+            services.AddTransient<IPostRepository, PostRepository>();
+
+            //DTO mappers
+            services.AddTransient<PostMapper>();
+
+            //View Model mappers
+            services.AddTransient<PostViewModelMapper>();
+
+            services.AddTransient<IPostManager, PostManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
