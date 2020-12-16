@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Threading.Tasks;
 
 namespace BlogProject.Database
 {
@@ -32,30 +32,30 @@ namespace BlogProject.Database
             return list;
         }
 
-        public bool AddNew(Entity entity)
+        public async Task<bool> AddNew(Entity entity)
         {
             DbSet.Add(entity);
 
-            return SaveChanges();
+            return await SaveChangesAsync();
         }
 
-        public bool Delete(Entity entity)
+        public async Task<bool> Delete(Entity entity)
         {
             var foundEntity = DbSet.FirstOrDefault(x => x.Id == entity.Id);
             if (foundEntity != null)
             {
                 DbSet.Remove(foundEntity);
 
-                return SaveChanges();
+                return await SaveChangesAsync();
             }
 
             return false;
 
         }
 
-        public bool SaveChanges()
+        public async Task<bool> SaveChangesAsync()
         {
-            return _dbContext.SaveChanges() > 0;
+            return await _dbContext.SaveChangesAsync() > 0;
         }
     }
 }

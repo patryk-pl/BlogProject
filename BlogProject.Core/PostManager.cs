@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BlogProject.Core
 {
@@ -18,10 +19,10 @@ namespace BlogProject.Core
             _postRepository = postRepository;
             _postMapper = postMapper;
         }
-        public bool Add(PostDto postDto)
+        public async Task<bool> Add(PostDto postDto)
         {
             var entity = _postMapper.Map(postDto);
-            return _postRepository.AddNew(entity);
+            return await _postRepository.AddNew(entity);
         }
     }
 }
