@@ -2,20 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlogProject.Core;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogProject
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        private readonly IPostManager _postManager;
+        private readonly PostViewModelMapper _postViewModelMapper;
 
-        public IActionResult Post()
+        public HomeController(IPostManager postManager, PostViewModelMapper postViewModelMapper)
         {
-            return View();
+            _postManager = postManager;
+            _postViewModelMapper = postViewModelMapper;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var postDtos = await _postManager.GetAllPostAsync();
+            var postViewModel = _postViewModelMapper.Map(postDtos);
+            return View(postViewModel);
         }
     }
 }

@@ -21,11 +21,15 @@ namespace BlogProject.Database
         }
         public async Task<IEnumerable<Post>> GetAllPostsAsync()
         {
-            return await DbSet.Select(x => x);
+            return await DbSet.Select(x => x).ToListAsync();
+        }
+        public async Task<Post> GetSinglePostAsync(int? id)
+        {
+            return await DbSet.FirstOrDefaultAsync(x => x.Id == id);
         }
         public async Task<bool> EditPostAsync(Post post)
         {
-            var foundEntity = DbSet.FirstOrDefault(x => x.Id == post.Id);
+            var foundEntity = await DbSet.FirstOrDefaultAsync(x => x.Id == post.Id);
             if (foundEntity != null)
             {
                 foundEntity.Title = post.Title;

@@ -9,6 +9,7 @@ namespace BlogProject.Database
     {
         Task<Post> GetPostAsync(int id);
         Task<IEnumerable<Post>> GetAllPostsAsync();
+        Task<Post> GetSinglePostAsync(int? id);
         Task<bool> EditPostAsync(Post post);
     }
 }

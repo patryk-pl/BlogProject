@@ -1,0 +1,29 @@
+﻿@model IEnumerable<PostViewModel>
+
+@{ }
+
+<h2>Your posts</h2>
+
+@if (Model.Count() > 0)
+{
+    foreach (var post in Model)
+    {
+        <li>
+            <a asp-controller="Post" asp-action="Display" asp-route-id="@post.Id">
+                @post.Title
+            </a>
+            <a asp-controller="Post" asp-action="Edit" asp-route-id="@post.Id">
+                Edit
+            </a>
+            <a asp-controller="Post" asp-action="Delete" asp-route-id="@post.Id">
+                Remove
+            </a>
+
+        </li>
+    }
+}
+else
+{
+    <h3>Sorry! There is no posts to show right now :(</h3>
+    <h4>... come back later :) </h4>
+}
