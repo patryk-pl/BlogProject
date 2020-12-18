@@ -8,18 +8,24 @@
 {
     foreach (var post in Model)
     {
-        <li>
-            <a asp-controller="Post" asp-action="Display" asp-route-id="@post.Id">
-                @post.Title
-            </a>
-            <a asp-controller="Post" asp-action="Edit" asp-route-id="@post.Id">
-                Edit
-            </a>
-            <a asp-controller="Post" asp-action="Delete" asp-route-id="@post.Id">
-                Remove
-            </a>
+<li>
+    <a asp-controller="Post" asp-action="Display" asp-route-id="@post.Id">
+        @post.Title
+    </a>
+    ||
+    <a asp-controller="Post" asp-action="Edit" asp-route-id="@post.Id">
+        Edit
+    </a>
+    ||
+    <a asp-controller="Post" asp-action="Delete" asp-route-id="@post.Id">
+        Remove
+    </a>
+    ||
+    <a asp-controller="Post" asp-action="Details" asp-route-id="@post.Id">
+        Details
+    </a>
 
-        </li>
+</li>
     }
 }
 else

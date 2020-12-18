@@ -109,5 +109,22 @@ namespace BlogProject
             return RedirectToAction(nameof(Index));
         }
 
+        //GET - Details
+        [HttpGet]
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var postDto = await _postManager.GetSinglePostAsync(id);
+            var postViewModel = _postViewModelMapper.Map(postDto);
+            if (postViewModel == null)
+            {
+                return NotFound();
+            }
+            return View(postViewModel);
+        }
+
     }
 }

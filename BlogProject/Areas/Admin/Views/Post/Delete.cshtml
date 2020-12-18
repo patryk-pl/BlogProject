@@ -13,8 +13,8 @@
         </div>
         <div>
             <label>Body</label>
-            <input disabled asp-for="Body" />
+            <textarea disabled asp-for="Body"></textarea>
         </div>
-        <input type="submit" value="Delete" />
+        <partial name="_DeleteAndBackToList" model="@Model.Id" />
     </form>
 </div>
