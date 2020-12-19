@@ -18,35 +18,44 @@ namespace BlogProject
         {
             var host = CreateHostBuilder(args).Build();
 
-            var scope = host.Services.CreateScope();
-
-            var ctx = scope.ServiceProvider.GetRequiredService<BlogProjectDbContext>();
-            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
-            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
-            ctx.Database.EnsureCreated();
-
-            var adminRole = new IdentityRole("Admin");
-            if (!ctx.Roles.Any())
+            try
             {
-                roleManager.CreateAsync(adminRole).GetAwaiter().GetResult();
-                //Create a role
-            }
 
-            if (!ctx.Users.Any(u => u.UserName == "admin"))
-            {
-                //Create an admin
-                var adminUser = new IdentityUser
+
+                var scope = host.Services.CreateScope();
+
+                var ctx = scope.ServiceProvider.GetRequiredService<BlogProjectDbContext>();
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                ctx.Database.EnsureCreated();
+
+                var adminRole = new IdentityRole("Admin");
+                if (!ctx.Roles.Any())
                 {
+                    roleManager.CreateAsync(adminRole).GetAwaiter().GetResult();
+                    //Create a role
+                }
 
-                    UserName = "admin",
-                    Email = "admin@text.com"
-                };
-                userManager.CreateAsync(adminUser,"password").GetAwaiter().GetResult();
-                // add role to user
-                userManager.AddToRoleAsync(adminUser, adminRole.Name).GetAwaiter().GetResult();
+                if (!ctx.Users.Any(u => u.UserName == "admin"))
+                {
+                    //Create an admin
+                    var adminUser = new IdentityUser
+                    {
+
+                        UserName = "admin",
+                        Email = "admin@text.com"
+                    };
+                    var result = userManager.CreateAsync(adminUser, "password").GetAwaiter().GetResult();
+                    // add role to user
+                    userManager.AddToRoleAsync(adminUser, adminRole.Name).GetAwaiter().GetResult();
+                }
+
             }
-
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
             host.Run();
         }
 

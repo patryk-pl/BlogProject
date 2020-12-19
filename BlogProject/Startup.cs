@@ -35,9 +35,15 @@ namespace BlogProject
             options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")
                 ));
-            
 
-            services.AddDefaultIdentity<IdentityUser>()
+
+            services.AddDefaultIdentity<IdentityUser>(options => 
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+            })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<BlogProjectDbContext>();
 
