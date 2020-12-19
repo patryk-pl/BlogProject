@@ -42,7 +42,9 @@ namespace BlogProject
                     UserName = "admin",
                     Email = "admin@text.com"
                 };
-                userManager.CreateAsync(adminUser,"password");
+                userManager.CreateAsync(adminUser,"password").GetAwaiter().GetResult();
+                // add role to user
+                userManager.AddToRoleAsync(adminUser, adminRole.Name).GetAwaiter().GetResult();
             }
 
             host.Run();
