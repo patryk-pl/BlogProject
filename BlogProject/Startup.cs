@@ -7,6 +7,7 @@ using BlogProject.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,12 +29,20 @@ namespace BlogProject
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+
+
             services.AddDbContext<BlogProjectDbContext>(options =>
             options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")
                 ));
+            
 
-            services.AddTransient<IPostRepository, PostRepository>();
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<BlogProjectDbContext>();
+
+
+                services.AddTransient<IPostRepository, PostRepository>();
 
             //DTO mappers
             services.AddTransient<PostMapper>();
@@ -42,6 +51,8 @@ namespace BlogProject
             services.AddTransient<PostViewModelMapper>();
 
             services.AddTransient<IPostManager, PostManager>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +64,8 @@ namespace BlogProject
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
