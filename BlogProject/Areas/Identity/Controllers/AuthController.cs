@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using BlogProject.Core;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,12 +8,17 @@ using System.Threading.Tasks;
 
 namespace BlogProject.Areas.Identity.Controllers
 {
+    [Area("Identity")]
     public class AuthController : Controller
     {
         private readonly SignInManager<IdentityUser> _signInManager;
-        public AuthController(SignInManager<IdentityUser> signInManager)
+        private readonly LoginViewModelMapper _loginViewModelMapper;
+        private readonly IUserManager _userManager;
+        public AuthController(SignInManager<IdentityUser> signInManager, LoginViewModelMapper loginViewModelMapper, IUserManager userManager)
         {
             _signInManager = signInManager;
+            _loginViewModelMapper = loginViewModelMapper;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -22,9 +28,11 @@ namespace BlogProject.Areas.Identity.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginViewModel loginVm)
+        public async Task<IActionResult> Login(LoginViewModel loginVm)
         {
-            return View();
+            var loginDto = _loginViewModelMapper.Map(loginVm);
+            await _userManager.LoginUser(loginDto);
+            return RedirectToAction(nameof(Index), "Home", new {area = "Admin" });
         }
 
         [HttpGet]
