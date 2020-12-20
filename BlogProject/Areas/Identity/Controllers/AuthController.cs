@@ -32,7 +32,7 @@ namespace BlogProject.Areas.Identity.Controllers
         {
             var loginDto = _loginViewModelMapper.Map(loginVm);
             await _userManager.LoginUser(loginDto);
-            return RedirectToAction(nameof(Index), "Home", new {area = "Admin" });
+            return RedirectToAction("Index", "Home", new {area = "Admin" });
         }
 
         [HttpGet]
