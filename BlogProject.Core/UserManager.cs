@@ -35,9 +35,14 @@ namespace BlogProject.Core
 
         public async Task<SignInResult> LoginUser(LoginDto loginDto)
         {
-            var entity = _userMapper.Map(loginDto);
-            var result = await _signInManager.PasswordSignInAsync(entity.UserName, entity.PasswordHash, false, false);
+           // var entity = _userMapper.Map(loginDto);
+            var result = await _signInManager.PasswordSignInAsync(loginDto.UserName, loginDto.Password, false, false);
             return result;
+        }
+
+        public async Task LogoutUser()
+        {
+            await _signInManager.SignOutAsync();
         }
         
     }
