@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace BlogProject
+namespace BlogProject.Core
 {
-    public class LoginViewModel
+    public class LoginDto
     {
         public int Id { get; set; }
         public string UserName { get; set; }

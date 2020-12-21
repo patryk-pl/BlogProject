@@ -52,11 +52,14 @@ namespace BlogProject
 
             //DTO mappers
             services.AddTransient<PostMapper>();
+            services.AddTransient<UserMapper>();
 
             //View Model mappers
             services.AddTransient<PostViewModelMapper>();
+            services.AddTransient<LoginViewModelMapper>();
 
             services.AddTransient<IPostManager, PostManager>();
+            services.AddTransient<IUserManager, UserManager>();
 
 
         }
