@@ -75,6 +75,7 @@ namespace BlogProject
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
             app.UseAuthentication();
             app.UseRouting();
             app.UseAuthorization(); //necessary to use services.ConfigureApplicationCookie 
