@@ -15,7 +15,8 @@ namespace BlogProject
         {
             _mapper = new MapperConfiguration(config =>
             {
-                config.CreateMap<LoginDto, LoginViewModel>().ReverseMap();
+                config.CreateMap<LoginDto, LoginViewModel>()
+                .ReverseMap();
             }).CreateMapper();
         }
         public LoginViewModel Map(LoginDto loginDto) => _mapper.Map<LoginViewModel>(loginDto);

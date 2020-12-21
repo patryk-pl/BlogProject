@@ -10,5 +10,6 @@ namespace BlogProject.Core
     {
         Task AddUser(LoginDto userDto);
         Task<SignInResult> LoginUser(LoginDto loginDto);
+        Task LogoutUser();
     }
 }

@@ -31,14 +31,16 @@ namespace BlogProject.Areas.Identity.Controllers
         public async Task<IActionResult> Login(LoginViewModel loginVm)
         {
             var loginDto = _loginViewModelMapper.Map(loginVm);
-            await _userManager.LoginUser(loginDto);
-            return RedirectToAction("Index", "Home", new {area = "Admin" });
+            var result = await _userManager.LoginUser(loginDto);
+            
+            return RedirectToAction("Index", "Post", new {area = "Admin" });
         }
 
         [HttpGet]
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            return View();
+            await _userManager.LogoutUser();
+            return RedirectToAction(nameof(Login));
         }
     }
 }
