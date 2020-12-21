@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BlogProject.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogProject
 {
     [Area("Admin")]
-    public class PostController : Controller
+    [Authorize(Roles ="Admin")]
+    public class AdminPanelController : Controller
     {
         private readonly IPostManager _postManager;
         private readonly PostViewModelMapper _postViewModelMapper;
 
-        public PostController(IPostManager postManager, PostViewModelMapper postViewModelMapper)
+        public AdminPanelController(IPostManager postManager, PostViewModelMapper postViewModelMapper)
         {
             _postManager = postManager;
             _postViewModelMapper = postViewModelMapper;

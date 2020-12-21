@@ -1,1 +1,22 @@
-﻿<h2>This is a Post Page</h2>
+﻿@model IEnumerable<PostViewModel>
+
+@{ }
+
+<h2>Home Page</h2>
+
+@if (Model.Count() > 0)
+{
+    foreach (var post in Model)
+    {
+        <li>
+            <a asp-controller="Post" asp-action="Display" asp-route-id="@post.Id">
+                @post.Title
+            </a>
+        </li>
+    }
+}
+else
+{
+    <h3>Sorry! There is no posts to show right now :(</h3>
+    <h4>... come back later :) </h4>
+}

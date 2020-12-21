@@ -20,6 +20,10 @@ namespace BlogProject
         }
         public async Task<IActionResult> Index()
         {
+            return View();
+        }
+        public async Task<IActionResult> Post()
+        {
             var postDtos = await _postManager.GetAllPostAsync();
             var postViewModel = _postViewModelMapper.Map(postDtos);
             return View(postViewModel);

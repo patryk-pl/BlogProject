@@ -33,14 +33,15 @@ namespace BlogProject.Areas.Identity.Controllers
             var loginDto = _loginViewModelMapper.Map(loginVm);
             var result = await _userManager.LoginUser(loginDto);
             
-            return RedirectToAction("Index", "Post", new {area = "Admin" });
+            return RedirectToAction("Index", "AdminPanel", new {area = "Admin" });
+
         }
 
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await _userManager.LogoutUser();
-            return RedirectToAction(nameof(Login));
+            return RedirectToAction("Index", "Home", new { area = "Customer" });
         }
     }
 }

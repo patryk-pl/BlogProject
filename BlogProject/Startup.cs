@@ -37,15 +37,18 @@ namespace BlogProject
                 ));
 
 
-            services.AddDefaultIdentity<IdentityUser>(options => 
+            services.AddIdentity<IdentityUser, IdentityRole>(options => 
             {
                 options.Password.RequireDigit = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequiredLength = 6;
             })
-                .AddRoles<IdentityRole>()
+                //.AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<BlogProjectDbContext>();
+
+
+            services.ConfigureApplicationCookie(options => { options.LoginPath = "/Identity/Auth/Login"; });
 
 
                 services.AddTransient<IPostRepository, PostRepository>();
@@ -72,9 +75,10 @@ namespace BlogProject
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseRouting();
-
             app.UseAuthentication();
+            app.UseRouting();
+            app.UseAuthorization(); //necessary to use services.ConfigureApplicationCookie 
+
 
             app.UseEndpoints(endpoints =>
             {

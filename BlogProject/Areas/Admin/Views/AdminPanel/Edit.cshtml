@@ -1,11 +1,12 @@
 ﻿@model PostViewModel
 
-@{ 
+@{
 
 }
 
 <div>
-    <form asp-controller="Post" asp-action="Create" method="post">
+    <form asp-controller="AdminPanel" asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
         <div>
             <label>Title</label>
             <input asp-for="Title" />
@@ -14,6 +15,6 @@
             <label>Body</label>
             <textarea asp-for="Body"></textarea>
         </div>
-        <partial name="_CreateAndBackToList" />
+        <partial name="_EditAndBackToList" model="@Model.Id" />
     </form>
 </div>
