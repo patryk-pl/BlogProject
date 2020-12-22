@@ -6,15 +6,21 @@
 
 <div>
     <form asp-controller="AdminPanel" asp-action="Delete" method="post">
-        <input type="hidden" asp-for="Id"/>
+        <input type="hidden" asp-for="Id" />
         <div>
-            <label>Title</label>
-            <input disabled asp-for="Title" />
-        </div>
-        <div>
-            <label>Body</label>
-            <textarea disabled asp-for="Body"></textarea>
-        </div>
-        <partial name="_DeleteAndBackToList" model="@Model.Id" />
+            @{
+                var base64 = Convert.ToBase64String(Model.Image);
+                var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+            }
+            <img src="@imgsrc" height="100%" width="100%" />
+            <div>
+                <label>Title</label>
+                <input disabled asp-for="Title" />
+            </div>
+            <div>
+                <label>Body</label>
+                <textarea disabled asp-for="Body"></textarea>
+            </div>
+            <partial name="_DeleteAndBackToList" model="@Model.Id" />
     </form>
 </div>

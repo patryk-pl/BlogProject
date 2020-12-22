@@ -1,0 +1,16 @@
+﻿@model PostViewModel
+
+@{ }
+
+<h1>@Model.Title</h1>
+<p>@Model.Created</p>
+
+<idv>
+    @{
+        var base64 = Convert.ToBase64String(Model.Image);
+        var imgs = string.Format("data:image/jpg;base64,{0}", base64);
+    }
+    <img src="@imgs" height="100%" width="100%" />
+</idv>
+
+<textarea readonly>@Model.Body</textarea>

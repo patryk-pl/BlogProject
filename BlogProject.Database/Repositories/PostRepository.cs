@@ -34,6 +34,7 @@ namespace BlogProject.Database
             {
                 foundEntity.Title = post.Title;
                 foundEntity.Body = post.Body;
+                foundEntity.Image = post.Image;
 
                 return await SaveChangesAsync();
             }

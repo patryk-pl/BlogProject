@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BlogProject.Core;
@@ -9,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BlogProject
 {
     [Area("Admin")]
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminPanelController : Controller
     {
         private readonly IPostManager _postManager;
@@ -43,6 +44,21 @@ namespace BlogProject
         {
             if (ModelState.IsValid)
             {
+                var files = HttpContext.Request.Form.Files;
+                if (files.Count > 0)
+                {
+                    byte[] p1 = null;
+                    using (var fs1 = files[0].OpenReadStream())
+                    {
+                        using (var ms1 = new MemoryStream())
+                        {
+                            fs1.CopyTo(ms1);
+                            p1 = ms1.ToArray();
+                        }
+                    }
+                    postVm.Image = p1;
+                }
+
                 var postDto = _postViewModelMapper.Map(postVm);
                 await _postManager.Add(postDto);
 
@@ -71,14 +87,30 @@ namespace BlogProject
         [HttpPost]
         public async Task<IActionResult> Edit(PostViewModel postVm)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var postDto = _postViewModelMapper.Map(postVm);
-                await _postManager.EditPostAsync(postDto);
-
-                return RedirectToAction(nameof(Index));
+                return View(postVm);
             }
-            return View(postVm);
+
+            var files = HttpContext.Request.Form.Files;
+            if(files.Count > 0)
+            {
+                byte[] p1 = null;
+                using (var fs1 = files[0].OpenReadStream())
+                {
+                    using (var ms1 = new MemoryStream())
+                    {
+                        fs1.CopyTo(ms1);
+                        p1 = ms1.ToArray();
+                    }
+                }
+                postVm.Image = p1;
+            }
+
+            var postDto = _postViewModelMapper.Map(postVm);
+            await _postManager.EditPostAsync(postDto);
+
+            return RedirectToAction(nameof(Index));
         }
 
         //GET - DELETE

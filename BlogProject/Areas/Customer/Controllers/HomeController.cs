@@ -22,10 +22,24 @@ namespace BlogProject
         {
             return View();
         }
-        public async Task<IActionResult> Post()
+        public async Task<IActionResult> Posts()
         {
             var postDtos = await _postManager.GetAllPostAsync();
             var postViewModel = _postViewModelMapper.Map(postDtos);
+            return View(postViewModel);
+        }
+        public async Task<IActionResult> Display(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var postDto = await _postManager.GetSinglePostAsync(id);
+            var postViewModel = _postViewModelMapper.Map(postDto);
+            if (postViewModel == null)
+            {
+                return NotFound();
+            }
             return View(postViewModel);
         }
     }
