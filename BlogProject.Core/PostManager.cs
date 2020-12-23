@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace BlogProject.Core
 {
@@ -34,9 +35,21 @@ namespace BlogProject.Core
             var entity = _postMapper.Map(postDto);
             return await _postRepository.Delete(entity);
         }
-        public async Task<IEnumerable<PostDto>> GetAllPostAsync()
+        public async Task<IEnumerable<PostDto>> GetAllPostAsync(string filterString)
         {
             var postEntities = await _postRepository.GetAllPostsAsync();
+
+            
+            if (!string.IsNullOrEmpty(filterString))
+            {
+                postEntities = postEntities.Where(x => 
+                       x.Body.Contains(filterString)
+                    || x.Category.Contains(filterString)
+                    || x.Description.Contains(filterString)
+                    || x.Tags.Contains(filterString)
+                    );
+            }
+
             return _postMapper.Map(postEntities);
         }
         public async Task<PostDto> GetSinglePostAsync(int? id)

@@ -23,9 +23,9 @@ namespace BlogProject
         }
 
         // GET - INDEX
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string filterString)
         {
-            var postDtos = await _postManager.GetAllPostAsync();
+            var postDtos = await _postManager.GetAllPostAsync(filterString);
             var postViewModel = _postViewModelMapper.Map(postDtos);
             return View(postViewModel);
         }

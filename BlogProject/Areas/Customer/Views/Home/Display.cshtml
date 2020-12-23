@@ -1,6 +1,10 @@
 ﻿@model PostViewModel
 
-@{ }
+@{
+    ViewBag.Title = Model.Title;
+    ViewBag.Description = Model.Description;
+    ViewBag.Keywords = $"{(Model.Tags?.Replace(",",""))} {Model.Category}";
+}
 
 <h1>@Model.Title</h1>
 <p>@Model.Created</p>

@@ -14,7 +14,7 @@
                 var base64 = Convert.ToBase64String(Model.Image);
                 var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
             }
-            <img src="@imgsrc" height="100%" width="100%" />
+            <img src="@imgsrc" />
         </div>
         <div>
             <label>Title</label>
@@ -29,9 +29,9 @@
         <div>
             <label>Category</label>
             <select asp-for="Category">
-                <option value="0">Travel</option>
-                <option value="1">Programing</option>
-                <option value="3">Photography</option>
+                <option value="Travel">Travel</option>
+                <option value="Programing">Programing</option>
+                <option value="Photography">Photography</option>
             </select>
         </div>
 

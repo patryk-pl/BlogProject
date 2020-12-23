@@ -22,10 +22,11 @@ namespace BlogProject
         {
             return View();
         }
-        public async Task<IActionResult> Posts()
+        public async Task<IActionResult> Posts(string filterString)
         {
-            var postDtos = await _postManager.GetAllPostAsync();
+            var postDtos = await _postManager.GetAllPostAsync(filterString);
             var postViewModel = _postViewModelMapper.Map(postDtos);
+
             return View(postViewModel);
         }
         public async Task<IActionResult> Display(int? id)
